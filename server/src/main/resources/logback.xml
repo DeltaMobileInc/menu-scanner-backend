@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FILE 8: server/src/main/resources/logback.xml                          -->
+<!-- Logback logging configuration.                                         -->
+<!-- Logs to both CONSOLE (development) and rolling FILE (production).      -->
+<configuration>
+
+    <property name="LOG_FILE"    value="logs/application.log"/>
+    <property name="LOG_PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- ── Console appender ─────────────────────────────────────────────── -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ── Rolling file appender ────────────────────────────────────────── -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- Daily rollover; gzip archives after rotation -->
+            <fileNamePattern>logs/application-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- ── Logger levels ────────────────────────────────────────────────── -->
+    <!-- Application code: DEBUG to capture all business logic -->
+    <logger name="com.menu"                   level="DEBUG"/>
+
+    <!-- Ktor framework: INFO to see route registrations and request logs -->
+    <logger name="io.ktor"                    level="INFO"/>
+
+    <!-- Netty: WARN to suppress verbose connection-level noise -->
+    <logger name="io.netty"                   level="WARN"/>
+
+    <!-- kotlinx.coroutines: WARN (very verbose at DEBUG) -->
+    <logger name="kotlinx.coroutines"         level="WARN"/>
+
+    <!-- ── Root logger ──────────────────────────────────────────────────── -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

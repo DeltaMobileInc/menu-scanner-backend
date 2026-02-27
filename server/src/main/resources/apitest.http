@@ -1,0 +1,24 @@
+
+###
+GET http://localhost:8080/
+
+###
+GET http://localhost:8080/restaurants
+
+###
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}

@@ -1,0 +1,22 @@
+# Secrets – never commit these
+.env
+
+# Claude Code local settings
+.claude/
+
+# Gradle
+.gradle/
+build/
+server/build/
+
+# IntelliJ / IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+logs/
+
+# OS
+.DS_Store
